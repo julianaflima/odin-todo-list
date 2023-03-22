@@ -1,0 +1,100 @@
+@font-face {
+  font-family: 'Header';
+  src: url('./SellenaBrush-x3JyK.ttf') format('TrueType');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MainFont';
+  src: url('./Montserrat-VariableFont_wght.ttf') format('TrueType');
+  font-weight: 600;
+  font-style: normal;
+}
+
+
+body {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	color: rgb(63, 50, 68);
+	font-family: MainFont, sans-serif;
+	background-color: rgb(182, 169, 172);
+}
+
+#leftSide,
+#rightSide {
+	border-radius: 30px;
+	flex-grow: 1;
+	padding: 20px;
+}
+
+#leftSide{
+	width: 200px;
+	background-color: #e5c3d1;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+	gap: 10px;
+	align-self: start;
+}
+
+#leftSide > div,
+#rightSide > div > div {
+	box-sizing: border-box;
+	border-radius: 20px;
+	padding: 10px 10px 10px 15px;
+}
+
+#leftSide > div:hover,
+#rightSide > div > div:hover{
+	transform: translateY(-5%);
+	cursor:pointer;
+}
+
+#leftSide > div {
+	background-color: rgb(152, 139, 142);
+}
+
+#rightSide {
+	width: 300px;
+  background-color: rgb(152, 139, 142);
+}
+
+#rightSide > h2 {
+	margin: 0px; 
+	font-family: Header, cursive;
+	font-size: 64px;
+}
+
+#rightSide > div {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 110px);
+	grid-auto-rows: 110px;
+	column-gap: 20px;
+	row-gap: 10px;
+}
+
+#rightSide > div > div {
+	background-color: #e5c3d1;
+}
+
+#rightSide button {
+	font-weight: 600;
+	font-size: 20px;
+	margin: 0px 0px 15px;
+	padding: 0px 12px 2px 5px;
+	background-color: transparent;
+	border: none;
+	border-radius: 30px;
+	color: rgb(63, 50, 68);
+}
+
+#rightSide button:hover {
+	color: rgb(152, 139, 142);
+	background-color: rgb(63, 50, 68);
+	cursor: pointer;
+}
+
+#rightSide span {
+	font-size: 24px;
+}
