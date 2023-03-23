@@ -25,13 +25,13 @@ body {
 #leftSide,
 #rightSide {
 	border-radius: 30px;
-	flex-grow: 1;
 	padding: 20px;
 }
 
 #leftSide{
 	width: 200px;
 	background-color: #e5c3d1;
+	flex-grow: 1;
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
 	gap: 10px;
@@ -39,14 +39,14 @@ body {
 }
 
 #leftSide > div,
-#rightSide > div > div {
+.cards {
 	box-sizing: border-box;
 	border-radius: 20px;
 	padding: 10px 10px 10px 15px;
 }
 
 #leftSide > div:hover,
-#rightSide > div > div:hover{
+.cards:hover{
 	transform: translateY(-5%);
 	cursor:pointer;
 }
@@ -56,25 +56,25 @@ body {
 }
 
 #rightSide {
+	flex-grow: 2;
 	width: 300px;
   background-color: rgb(152, 139, 142);
 }
 
-#rightSide > h2 {
+#right-side-content > h2 {
 	margin: 0px; 
 	font-family: Header, cursive;
 	font-size: 64px;
 }
 
-#rightSide > div {
+#card-container {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 110px);
 	grid-auto-rows: 110px;
-	column-gap: 20px;
-	row-gap: 10px;
+	gap: 20px;
 }
 
-#rightSide > div > div {
+.cards {
 	background-color: #e5c3d1;
 }
 
