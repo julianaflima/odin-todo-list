@@ -15,7 +15,6 @@ const rightSide = `<div id="right-side-content">
 	</div>
 </div>`;
 
-
 // Define all functions related to the right side of the display
 const displayRight = (() => {
 	// Add button function
@@ -35,6 +34,24 @@ const displayRight = (() => {
 		genericCard.addRoomCard(newRoom);
 	};
 
+	const addTask = (task) => {
+		// Ass task to object
+		const list = new ListOfRooms();
+		const hTwo = document.querySelector("#right-side-content h2:first-child");
+
+		// find the object with the identifier
+		const index = list.getArray.findIndex(
+			(room) => room.identifier === +hTwo.dataset.identifier
+		);
+		const room = list.getArray[index];
+		room.task = task;
+		console.log(list.getArray);
+
+		// Add task to display
+		const taskContainer = document.querySelector("#task-container");
+		taskContainer.innerHTML += `<div class="tasks">${task}</div>`;
+	};
+
 	// Show room on right side
 	const showRoom = (e) => {
 		// delete everything
@@ -51,40 +68,133 @@ const displayRight = (() => {
 			e.target.dataset.value.charAt(0).toUpperCase() +
 			e.target.dataset.value.slice(1);
 		contentDiv.innerHTML = `
-		<h2>${roomName}</h2>
-		<button data-value="addTask"> <span>+</span> Add Task</button>`;
+		<h2 data-value="${e.target.dataset.value}" data-identifier="${e.target.dataset.identifier}">${roomName}</h2>
+		<button data-value="addTask"> <span>+</span> Add Task</button>
+		<div id="task-container"></div>`;
 
 		// TODO add list of tasks
+		const list = new ListOfRooms();
+		console.log(list.getArray);
+		const index = list.getArray.findIndex(
+			(room) => room.identifier === +e.target.dataset.identifier
+		);
+		const room = list.getArray[index];
+		console.log(room);
+		const taskContainer = document.querySelector("#task-container");
+		for (const task of room.tasks) {
+			taskContainer.innerHTML += `<div class="tasks">
+				<div>${task.task}</div> 
+				<div class="date">
+				<div class="deadline">${task.deadline}</div>
+				<div class="X"></div>
+				</div>
+			</div>`;
+		}
 
 		// TODO has to add event listeners to the tasks guess
 	};
 
 	const showAllRooms = () => {
 		//delete right-side-content
-		document.querySelector('#right-side-content').remove();
-		document.querySelector('#rightSide').innerHTML = rightSide;
-		console.log(rightSide)
-		console.log(document.querySelector('#rightSide').innerHTLM);
+		document.querySelector("#right-side-content").remove();
+		document.querySelector("#rightSide").innerHTML = rightSide;
 
 		const list = new ListOfRooms();
-		
+
 		for (const room of list.getArray) {
 			const genericCard = new RoomCard();
 			genericCard.addRoomCard(room);
 		}
-
 	};
 
 	return {
 		// return all functions defined
 		showRoom,
+		addTask,
 		addRoom,
 		showAllRooms,
 	};
 })();
 
 class ListOfRooms {
-	static #array = [];
+	static #array = [
+		{
+			name: "kitchen",
+			identifier: 0,
+			tasks: [
+				{
+					task: "clean stove",
+					deadline: "Tuesday",
+				},
+				{
+					task: "mop",
+					deadline: "Friday",
+				},
+				{
+					task: "sweep",
+					deadline: "Thursday",
+				},
+				{
+					task: "clean fridge",
+					deadline: "Sunday",
+				},
+			],
+		},
+		{
+			name: "bathroom",
+			identifier: 1,
+			tasks: [
+				{
+					task: "clean mirror",
+					deadline: "Tuesday",
+				},
+				{
+					task: "clean toilet",
+					deadline: "Friday",
+				},
+				{
+					task: "change towels",
+					deadline: "Thursday",
+				},
+			],
+		},
+		{
+			name: "bedroom",
+			identifier: 2,
+			tasks: [
+			{
+					task: "change sheets",
+					deadline: "Tuesday",
+				},
+				{
+					task: "clean mirror",
+					deadline: "Friday",
+				},
+				{
+					task: "mop",
+					deadline: "Thursday",
+				},
+				{
+					task: "organize closet",
+					deadline: "Sunday",
+				},
+			],
+		},
+		{
+			name: "office",
+			identifier: 3,
+			tasks: [
+			{
+					task: "mop",
+					deadline: "Thursday",
+				},
+				{
+					task: "clean desk",
+					deadline: "Sunday",
+				},
+			],
+		},
+	];
 
 	addRoomToArray(newRoom) {
 		ListOfRooms.#array.push(newRoom);
@@ -93,8 +203,6 @@ class ListOfRooms {
 	get getArray() {
 		return ListOfRooms.#array;
 	}
-
-
 }
 
 class Room {
@@ -105,11 +213,9 @@ class Room {
 	}
 
 	static #counter = 0;
-	
 
 	// TODO: Remove room from array
 }
-
 
 // Add to the DOM -- no, this should be CREATE, MODIFY
 class RoomCard {
@@ -133,10 +239,4 @@ class RoomCard {
 	}
 }
 
-
-export { 
-	leftSide, 
-	rightSide, 
-	displayRight,
-	ListOfRooms,
-};
+export { leftSide, rightSide, displayRight, ListOfRooms };

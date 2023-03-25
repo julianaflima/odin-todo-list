@@ -39,7 +39,8 @@ body {
 }
 
 #leftSide > div,
-.cards {
+.cards,
+.tasks {
 	box-sizing: border-box;
 	border-radius: 20px;
 	padding: 10px 10px 10px 15px;
@@ -97,4 +98,54 @@ body {
 
 #rightSide span {
 	font-size: 24px;
+}
+
+#task-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 10px;
+}
+
+.tasks {
+	/*width: 250px;*/
+	background-color: #e5c3d1;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
+	flex-wrap: wrap;
+} 
+
+.tasks>div:first-child {
+	margin-right: auto;
+	flex: 1;
+}
+
+.date {
+	display: flex;
+	gap: 15px;
+}
+
+.X {
+	width: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.X::before,
+.X::after {
+	content: '';
+	background-color: rgb(63, 50, 68);
+	width: 4px;
+	height: 18px;
+	position: absolute;
+	border-radius: 30px;
+}
+
+.X::before {
+	transform: rotate(-45deg);
+}
+
+.X::after {
+	transform: rotate(45deg);
 }

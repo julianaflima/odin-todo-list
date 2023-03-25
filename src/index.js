@@ -22,10 +22,7 @@ function render(content, id, classs) {
 	document.body.appendChild(render(home.leftSide, "leftSide"));
 	document.body.appendChild(render(home.rightSide, "rightSide"));
 	const list = new home.ListOfRooms();
-	home.displayRight.addRoom("kitchen");
-	home.displayRight.addRoom("bathroom");
-	home.displayRight.addRoom("bedroom");
-	home.displayRight.addRoom("office");
+	home.displayRight.showAllRooms();
 })();
 
 const linksLeftSide = document.querySelector("#leftSide");
@@ -60,9 +57,10 @@ linksRightSide.addEventListener("click", (e) => {
 		const roomName = prompt("Name your room:");
 		home.displayRight.addRoom(roomName);
 	} else if (whichRoom === "addTask") {
-		console.log("uhuu, add a Task!");
+		const task = prompt("Task:");
+		home.displayRight.addTask(task);
 	} else if (e.target.dataset.value) {
-		console.log(whichRoom);
+		// console.log(whichRoom);
 		home.displayRight.showRoom(e);
 	} else {
 		return;
