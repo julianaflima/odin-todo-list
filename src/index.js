@@ -5,6 +5,7 @@
 import "./home/home.css";
 import * as home from "./home/home.js";
 
+
 function render(content, id, classs) {
 	const element = document.createElement("div");
 	element.id = id;

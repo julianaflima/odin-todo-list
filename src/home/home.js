@@ -1,3 +1,6 @@
+import { Task } from "../task/task.js";
+import { Room, RoomCard } from "../room/room.js";
+
 // Here I write the whole html of the loading/landing page
 // Don't forget the `export` statement
 // Write everything in strings to be added as innerHtml
@@ -34,22 +37,12 @@ const displayRight = (() => {
 		genericCard.addRoomCard(newRoom);
 	};
 
-	const addTask = (task) => {
-		// Ass task to object
-		const list = new ListOfRooms();
-		const hTwo = document.querySelector("#right-side-content h2:first-child");
+	const addTask = (taskName) => {
+		const newTask = new Task;
+		const roomIndex = newTask.getRoomIndex(document.querySelector("#right-side-content h2:first-child"))
 
-		// find the object with the identifier
-		const index = list.getArray.findIndex(
-			(room) => room.identifier === +hTwo.dataset.identifier
-		);
-		const room = list.getArray[index];
-		room.task = task;
-		console.log(list.getArray);
-
-		// Add task to display
-		const taskContainer = document.querySelector("#task-container");
-		taskContainer.innerHTML += `<div class="tasks">${task}</div>`;
+		newTask.addTaskToRoom(taskName, roomIndex);
+		newTask.addNewTaskToDisplay(taskName, roomIndex);
 	};
 
 	// Show room on right side
@@ -72,23 +65,11 @@ const displayRight = (() => {
 		<button data-value="addTask"> <span>+</span> Add Task</button>
 		<div id="task-container"></div>`;
 
-		// TODO add list of tasks
-		const list = new ListOfRooms();
-		console.log(list.getArray);
-		const index = list.getArray.findIndex(
-			(room) => room.identifier === +e.target.dataset.identifier
-		);
-		const room = list.getArray[index];
-		console.log(room);
-		const taskContainer = document.querySelector("#task-container");
-		for (const task of room.tasks) {
-			taskContainer.innerHTML += `<div class="tasks">
-				<div>${task.task}</div> 
-				<div class="date">
-				<div class="deadline">${task.deadline}</div>
-				<div class="X"></div>
-				</div>
-			</div>`;
+		// Add list of tasks
+		const newTask = new Task;
+		const roomObject = newTask.getRoomIndex(e.target);
+		for (const task of roomObject.tasks) {
+			newTask.displayAllTasks(task.task, task.deadline);
 		}
 
 		// TODO has to add event listeners to the tasks guess
@@ -202,40 +183,6 @@ class ListOfRooms {
 
 	get getArray() {
 		return ListOfRooms.#array;
-	}
-}
-
-class Room {
-	constructor(roomName) {
-		this.name = roomName;
-		this.identifier = Room.#counter++;
-		this.tasks = [];
-	}
-
-	static #counter = 0;
-
-	// TODO: Remove room from array
-}
-
-// Add to the DOM -- no, this should be CREATE, MODIFY
-class RoomCard {
-	addRoomCard(newRoom) {
-		const newCard = document.createElement("div");
-		newCard.classList.add("cards");
-		newCard.setAttribute("data-value", newRoom.name);
-		newCard.setAttribute("data-identifier", newRoom.identifier);
-		newCard.textContent = this.#capitalizeFirstLetter(newRoom.name);
-
-		document.querySelector("#card-container").appendChild(newCard);
-	}
-
-	#capitalizeFirstLetter(string) {
-		if (typeof string === "string") {
-			const capitalized = string.charAt(0).toUpperCase() + string.slice(1);
-			return capitalized;
-		} else {
-			return string;
-		}
 	}
 }
 
