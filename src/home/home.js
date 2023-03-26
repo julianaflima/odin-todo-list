@@ -10,7 +10,35 @@ const leftSide = `<div data-value="today">Today</div>
 <div data-value="scheduled">Scheduled</div>
 <div data-value="allTasks">All tasks</div>
 <div data-value="completed">Completed</div>
-<div data-value="allRooms">All rooms</div>`;
+<div data-value="allRooms">All rooms</div>
+<dialog id="roomDialog">
+  <form method="dialog">
+    <p>
+      <label for="roomName">Room:</label>
+      <input type="text" name="roomName" id="roomName">
+    </p>
+    <div>
+      <button value="cancel">Cancel</button>
+      <button id="confirmBtn">Confirm</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="taskDialog">
+  <form method="dialog">
+    <p>
+      <label for="taskName">Task:</label>
+      <input type="text" name="taskName" id="taskName">
+    </p>
+    <p>
+			<label for="taskDeadline">Date:</label>
+      <input type="text" name="taskDeadline" id="taskDeadline">
+    </p>	
+    <div>
+      <button value="cancel">Cancel</button>
+      <button id="confirmBtn">Confirm</button>
+    </div>
+  </form>
+</dialog>`;
 
 const rightSide = `<div id="right-side-content">
 	<h2>Rooms</h2>
@@ -38,12 +66,14 @@ const displayRight = (() => {
 		genericCard.addRoomCard(newRoom);
 	};
 
-	const addTask = (taskName, deadline, e) => {
+	const addTask = (taskName, deadline) => {
+		const roomId = document.querySelector("h2").dataset.identifier;
+
 		const newTask = new Task(taskName, deadline);
-		const roomObject = newTask.getRoomObjectFromRoomId(e.target.dataset.roomid);
+		const roomObject = newTask.getRoomObjectFromRoomId(roomId);
 
 		newTask.addTaskToRoom(roomObject);
-		newTask.addNewTaskToDisplay(taskName, roomObject);
+		newTask.displayIndividualTask(newTask, roomObject);
 	};
 
 	// Show room on right side
@@ -67,14 +97,16 @@ const displayRight = (() => {
 		<div id="task-container"></div>`;
 
 		// Add list of tasks
-		const newTask = new Task();
-		const roomObject = newTask.getRoomObjectFromRoomId(e.target.dataset.identifier);
+		const genericTask = new Task();
+		const roomObject = genericTask.getRoomObjectFromRoomId(
+			e.target.dataset.identifier
+		);
 		for (const task of roomObject.tasks) {
-			newTask.displayIndividualTask(task, roomObject);
+			genericTask.displayIndividualTask(task, roomObject);
 		}
 
 		// TODO has to add event listeners to the tasks guess
-		newTask.addDeleteButton();
+		genericTask.addDeleteButton();
 	};
 
 	const showAllRooms = () => {
@@ -98,9 +130,5 @@ const displayRight = (() => {
 		showAllRooms,
 	};
 })();
-
-
-
-
 
 export { leftSide, rightSide, displayRight };

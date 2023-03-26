@@ -2,12 +2,18 @@
 // So it imports everything
 // It has the render function to render the page on loading
 
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/solid'
+import '@fortawesome/fontawesome-free/js/regular'
+import '@fortawesome/fontawesome-free/js/brands'
+import 'font-awesome-animation/css/font-awesome-animation.min.css'
 import "./home/home.css";
-import "./all_tasks/all_tasks.css"
+import "./all_tasks/all_tasks.css";
+import "./completed/completed.css";
 import * as home from "./home/home.js";
 import { ListOfRooms } from "./room/list_of_rooms.js";
-import * as allTasks from "./all_tasks/all_tasks.js"
-
+import * as allTasks from "./all_tasks/all_tasks.js";
+import { displayCompletedTasks } from "./completed/completed.js"
 
 function render(content, id, classs) {
 	const element = document.createElement("div");
@@ -42,11 +48,10 @@ linksLeftSide.addEventListener("click", (e) => {
 			break;
 		// Not all tasks will have a reminder, so they'll show up here
 		case "allTasks":
-			console.log("Give me all tasks, even if not scheduled!");
 			allTasks.displayAllTasks.addTask();
 			break;
 		case "completed":
-			console.log("Give me all tasks that have been completed and when!");
+			displayCompletedTasks.displayTasks();
 			break;
 		case "allRooms":
 			home.displayRight.showAllRooms();
@@ -58,15 +63,29 @@ const linksRightSide = document.querySelector("#rightSide");
 linksRightSide.addEventListener("click", (e) => {
 	const whichRoom = e.target.dataset.value;
 	if (whichRoom === "addRoom") {
-		const roomName = prompt("Name your room:");
-		home.displayRight.addRoom(roomName);
+		// show modal
+		roomDialog.showModal();
 	} else if (whichRoom === "addTask") {
-		const taskName = prompt("Task:");
-		const deadline = prompt("Deadline:")
-		home.displayRight.addTask(taskName, deadline, e);
+		taskDialog.showModal()
 	} else if (e.target.dataset.value) {
 		home.displayRight.showRoom(e);
 	} else {
 		return;
 	}
+});
+
+
+const roomDialog = document.querySelector("#roomDialog");
+roomDialog.addEventListener("close", () => {
+	const input = document.querySelector("#roomName");
+	if(!input.value) return;
+	home.displayRight.addRoom(input.value);
+});
+
+const taskDialog = document.querySelector("#taskDialog");
+taskDialog.addEventListener("close", (e) => {
+	const taskName = document.querySelector("#taskName");
+	const taskDeadline = document.querySelector("#taskDeadline");
+	if(!taskName.value) return;
+	home.displayRight.addTask(taskName.value, taskDeadline.value);
 });

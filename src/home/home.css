@@ -42,8 +42,12 @@ body {
 .cards,
 .tasks {
 	box-sizing: border-box;
-	border-radius: 20px;
 	padding: 10px 10px 10px 15px;
+}
+
+#leftSide > div,
+.cards {
+	border-radius: 10px;
 }
 
 #leftSide > div:hover,
@@ -114,19 +118,14 @@ body {
 	align-items: center;
 	gap: 20px;
 	flex-wrap: wrap;
+	border-radius: 5px;
 } 
 
-.tasks>div:first-child {
+.task-main{
 	margin-right: auto;
-	flex: 1;
 }
 
-.date {
-	display: flex;
-	gap: 15px;
-}
-
-.X {
+/*.X {
 	width: 10px;
 	display: flex;
 	align-items: center;
@@ -148,4 +147,4 @@ body {
 
 .X::after {
 	transform: rotate(45deg);
-}
+}*/
