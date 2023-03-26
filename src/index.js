@@ -3,7 +3,10 @@
 // It has the render function to render the page on loading
 
 import "./home/home.css";
+import "./all_tasks/all_tasks.css"
 import * as home from "./home/home.js";
+import { ListOfRooms } from "./room/list_of_rooms.js";
+import * as allTasks from "./all_tasks/all_tasks.js"
 
 
 function render(content, id, classs) {
@@ -22,7 +25,7 @@ function render(content, id, classs) {
 (() => {
 	document.body.appendChild(render(home.leftSide, "leftSide"));
 	document.body.appendChild(render(home.rightSide, "rightSide"));
-	const list = new home.ListOfRooms();
+	const list = new ListOfRooms();
 	home.displayRight.showAllRooms();
 })();
 
@@ -40,12 +43,12 @@ linksLeftSide.addEventListener("click", (e) => {
 		// Not all tasks will have a reminder, so they'll show up here
 		case "allTasks":
 			console.log("Give me all tasks, even if not scheduled!");
+			allTasks.displayAllTasks.addTask();
 			break;
 		case "completed":
 			console.log("Give me all tasks that have been completed and when!");
 			break;
 		case "allRooms":
-			console.log("Show me initial page!");
 			home.displayRight.showAllRooms();
 			break;
 	}
@@ -58,8 +61,9 @@ linksRightSide.addEventListener("click", (e) => {
 		const roomName = prompt("Name your room:");
 		home.displayRight.addRoom(roomName);
 	} else if (whichRoom === "addTask") {
-		const task = prompt("Task:");
-		home.displayRight.addTask(task);
+		const taskName = prompt("Task:");
+		const deadline = prompt("Deadline:")
+		home.displayRight.addTask(taskName, deadline);
 	} else if (e.target.dataset.value) {
 		// console.log(whichRoom);
 		home.displayRight.showRoom(e);

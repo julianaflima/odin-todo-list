@@ -2,6 +2,7 @@ class Room {
 	constructor(roomName) {
 		this.name = roomName;
 		this.identifier = Room.#counter++;
+		this.taskID = 0;
 		this.tasks = [];
 	}
 

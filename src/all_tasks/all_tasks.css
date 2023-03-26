@@ -1,0 +1,16 @@
+.all-tasks {
+	box-sizing: border-box;
+	border-radius: 20px;
+	padding: 10px 10px 10px 15px;	
+	background-color: #e5c3d1;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.all-tasks>div:first-child {
+	margin-right: auto;
+	flex: 1;
+}

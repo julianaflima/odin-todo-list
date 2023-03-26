@@ -1,5 +1,6 @@
 import { Task } from "../task/task.js";
 import { Room, RoomCard } from "../room/room.js";
+import { ListOfRooms } from "../room/list_of_rooms.js";
 
 // Here I write the whole html of the loading/landing page
 // Don't forget the `export` statement
@@ -37,12 +38,12 @@ const displayRight = (() => {
 		genericCard.addRoomCard(newRoom);
 	};
 
-	const addTask = (taskName) => {
-		const newTask = new Task;
-		const roomIndex = newTask.getRoomIndex(document.querySelector("#right-side-content h2:first-child"))
+	const addTask = (taskName, deadline) => {
+		const newTask = new Task(taskName, deadline);
+		const roomObject = newTask.getRoomObject(document.querySelector("#right-side-content h2:first-child"));
 
-		newTask.addTaskToRoom(taskName, roomIndex);
-		newTask.addNewTaskToDisplay(taskName, roomIndex);
+		newTask.addTaskToRoom(roomObject);
+		newTask.addNewTaskToDisplay(taskName, roomObject);
 	};
 
 	// Show room on right side
@@ -66,13 +67,14 @@ const displayRight = (() => {
 		<div id="task-container"></div>`;
 
 		// Add list of tasks
-		const newTask = new Task;
-		const roomObject = newTask.getRoomIndex(e.target);
+		const newTask = new Task();
+		const roomObject = newTask.getRoomObject(e.target);
 		for (const task of roomObject.tasks) {
-			newTask.displayAllTasks(task.task, task.deadline);
+			newTask.displayAllTasks(task);
 		}
 
 		// TODO has to add event listeners to the tasks guess
+		newTask.addDeleteButton();
 	};
 
 	const showAllRooms = () => {
@@ -97,93 +99,8 @@ const displayRight = (() => {
 	};
 })();
 
-class ListOfRooms {
-	static #array = [
-		{
-			name: "kitchen",
-			identifier: 0,
-			tasks: [
-				{
-					task: "clean stove",
-					deadline: "Tuesday",
-				},
-				{
-					task: "mop",
-					deadline: "Friday",
-				},
-				{
-					task: "sweep",
-					deadline: "Thursday",
-				},
-				{
-					task: "clean fridge",
-					deadline: "Sunday",
-				},
-			],
-		},
-		{
-			name: "bathroom",
-			identifier: 1,
-			tasks: [
-				{
-					task: "clean mirror",
-					deadline: "Tuesday",
-				},
-				{
-					task: "clean toilet",
-					deadline: "Friday",
-				},
-				{
-					task: "change towels",
-					deadline: "Thursday",
-				},
-			],
-		},
-		{
-			name: "bedroom",
-			identifier: 2,
-			tasks: [
-			{
-					task: "change sheets",
-					deadline: "Tuesday",
-				},
-				{
-					task: "clean mirror",
-					deadline: "Friday",
-				},
-				{
-					task: "mop",
-					deadline: "Thursday",
-				},
-				{
-					task: "organize closet",
-					deadline: "Sunday",
-				},
-			],
-		},
-		{
-			name: "office",
-			identifier: 3,
-			tasks: [
-			{
-					task: "mop",
-					deadline: "Thursday",
-				},
-				{
-					task: "clean desk",
-					deadline: "Sunday",
-				},
-			],
-		},
-	];
 
-	addRoomToArray(newRoom) {
-		ListOfRooms.#array.push(newRoom);
-	}
 
-	get getArray() {
-		return ListOfRooms.#array;
-	}
-}
 
-export { leftSide, rightSide, displayRight, ListOfRooms };
+
+export { leftSide, rightSide, displayRight };
