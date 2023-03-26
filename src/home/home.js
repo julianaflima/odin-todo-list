@@ -74,6 +74,8 @@ const displayRight = (() => {
 
 		newTask.addTaskToRoom(roomObject);
 		newTask.displayIndividualTask(newTask, roomObject);
+		
+		newTask.addDeleteButton();
 	};
 
 	// Show room on right side
