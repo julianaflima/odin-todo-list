@@ -63,9 +63,8 @@ linksRightSide.addEventListener("click", (e) => {
 	} else if (whichRoom === "addTask") {
 		const taskName = prompt("Task:");
 		const deadline = prompt("Deadline:")
-		home.displayRight.addTask(taskName, deadline);
+		home.displayRight.addTask(taskName, deadline, e);
 	} else if (e.target.dataset.value) {
-		// console.log(whichRoom);
 		home.displayRight.showRoom(e);
 	} else {
 		return;

@@ -1,9 +1,8 @@
 import { ListOfRooms } from "../room/list_of_rooms.js";
+import { Task } from "../task/task.js"
 
 const displayAllTasks = (() => {
 	const addTask = () => {
-		console.log("yay working");
-
 		// delete everything
 		document.querySelector("#right-side-content").remove();
 
@@ -18,22 +17,18 @@ const displayAllTasks = (() => {
 
 		// get list of all rooms and their tasks
 		const list = new ListOfRooms;
-		console.log(list.getArray);
 
-		const taskContainer = document.querySelector("#task-container");
-		list.getArray.forEach( (room, index) =>
+		// add each task of each room to the task-container
+		const genericTask = new Task();
+		list.getArray.forEach( (room) =>
 		{
-			room.tasks.forEach( (roomTask, index1) => {
-				taskContainer.innerHTML += `<div class="all-tasks" data-taskid="${roomTask.taskID}">
-				<div>${roomTask.task}</div> 
-				<div class="date">
-				<div class="deadline">${roomTask.deadline}</div>
-				<div class="X" data-taskId="${roomTask.taskID}"></div>
-				</div>
-			</div>`;
+			room.tasks.forEach( (roomTask) => {
+				genericTask.displayIndividualTask(roomTask, room);
 			});
 		});
 
+		// add delete button
+		genericTask.addDeleteButton();
 	};
 
 	return {

@@ -38,9 +38,9 @@ const displayRight = (() => {
 		genericCard.addRoomCard(newRoom);
 	};
 
-	const addTask = (taskName, deadline) => {
+	const addTask = (taskName, deadline, e) => {
 		const newTask = new Task(taskName, deadline);
-		const roomObject = newTask.getRoomObject(document.querySelector("#right-side-content h2:first-child"));
+		const roomObject = newTask.getRoomObjectFromRoomId(e.target.dataset.roomid);
 
 		newTask.addTaskToRoom(roomObject);
 		newTask.addNewTaskToDisplay(taskName, roomObject);
@@ -63,14 +63,14 @@ const displayRight = (() => {
 			e.target.dataset.value.slice(1);
 		contentDiv.innerHTML = `
 		<h2 data-value="${e.target.dataset.value}" data-identifier="${e.target.dataset.identifier}">${roomName}</h2>
-		<button data-value="addTask"> <span>+</span> Add Task</button>
+		<button data-value="addTask" data-roomname="${e.target.dataset.value}" data-roomid="${e.target.dataset.identifier}"> <span>+</span> Add Task</button>
 		<div id="task-container"></div>`;
 
 		// Add list of tasks
 		const newTask = new Task();
-		const roomObject = newTask.getRoomObject(e.target);
+		const roomObject = newTask.getRoomObjectFromRoomId(e.target.dataset.identifier);
 		for (const task of roomObject.tasks) {
-			newTask.displayAllTasks(task);
+			newTask.displayIndividualTask(task, roomObject);
 		}
 
 		// TODO has to add event listeners to the tasks guess

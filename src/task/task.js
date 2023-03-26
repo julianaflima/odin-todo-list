@@ -7,26 +7,21 @@ class Task {
 		this.taskID = "";
 	}
 
-	getRoomObject(element) {
+	getRoomObjectFromRoomId(roomID) {
 		const list = new ListOfRooms();
 
-		// find the object with the identifier
+		// find the object with the identifier of the card clicked on
 		const index = list.getArray.findIndex(
-			(room) => room.identifier === +element.dataset.identifier
+			(room) => room.identifier === +roomID
 		);
-		console.log(list.getArray);
 
 		return list.getArray[index]; // return room Object
 	}
 
 	getTaskObject(taskId, currentRoomObject) {
-		console.log(currentRoomObject.tasks);
-
 		const index = currentRoomObject.tasks.findIndex(
 			(task) => task.taskID === +taskId
 		);
-		console.log(index);
-
 		return currentRoomObject.tasks[index]; // return task object
 	}
 
@@ -35,20 +30,19 @@ class Task {
 		roomObject.tasks.push(this);
 	}
 
-	displayAllTasks(task) {
+	displayIndividualTask(task, roomObject) {
 		const taskContainer = document.querySelector("#task-container");
 		taskContainer.innerHTML += `<div class="tasks" data-taskid="${task.taskID}">
 				<div>${task.task}</div> 
 				<div class="date">
 				<div class="deadline">${task.deadline}</div>
-				<div class="X" data-taskId="${task.taskID}"></div>
+				<div class="X" data-taskid="${task.taskID}" data-roomid="${roomObject.identifier}" data-roomname=${roomObject.name}></div>
 				</div>
 			</div>`;
 	}
 
+	// TODO Update this to use displayAllTasks
 	addNewTaskToDisplay(taskName, roomObject) {
-		// const room = this.getRoomIndex(roomToGetIndex);
-
 		const taskContainer = document.querySelector("#task-container");
 		taskContainer.innerHTML += `<div class="tasks">
 				<div>${roomObject.tasks[roomObject.tasks.length - 1].task}</div> 
@@ -78,10 +72,8 @@ class Task {
 		const taskId = e.target.dataset.taskid;
 
 		// Find room object that the task belongs to
-		const supportingTask = new Task();
-		const currentRoomObject = supportingTask.getRoomObject(
-			document.querySelector("#right-side-content>h2")
-		);
+		const genericTask = new Task();
+		const currentRoomObject = genericTask.getRoomObjectFromRoomId(e.target.dataset.roomid);
 
 		// Find task object index
 		const index = currentRoomObject.tasks.findIndex(
